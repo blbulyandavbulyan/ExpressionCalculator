@@ -12,7 +12,7 @@ class OperationFactory {
     init {
         getAllOperationSubClasses()
             .filter { !Modifier.isAbstract(it.modifiers) && it.isAnnotationPresent(Operator::class.java)}
-            .map { Pair(it.getAnnotation(Operator::class.java).value, it.constructors[0] as Constructor<out Operation>) }
+            .map { Pair(it.getAnnotation(Operator::class.java).name, it.constructors[0] as Constructor<out Operation>) }
             .map { it }.toMap(operators)
     }
     fun create(operatorName: String, getParameter: ()->Calculable): Operation{
