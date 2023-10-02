@@ -1,6 +1,9 @@
 package org.blbulyandavbulyan.exprcalc.rpn
 
+import org.blbulyandavbulyan.exprcalc.annotations.Associativity
 import org.blbulyandavbulyan.exprcalc.annotations.Name
+import org.blbulyandavbulyan.exprcalc.annotations.OperationInfo
+import org.blbulyandavbulyan.exprcalc.annotations.Priority
 import org.blbulyandavbulyan.exprcalc.caluclable.Calculable
 import org.blbulyandavbulyan.exprcalc.caluclable.operation.Operation
 import org.reflections.Reflections
@@ -33,10 +36,20 @@ class OperationFactory {
         return reflections.getSubTypesOf(Operation::class.java)
     }
     operator fun contains(operatorName: String): Boolean = operatorName in operations
-    fun getOperatorsInfos(): Map<String, OperatorInfo> = operations.entries
-        .map { Pair(it.key, it.value.getAnnotation(org.blbulyandavbulyan.exprcalc.annotations.OperatorInfo::class.java)) }
-        .filter { it.second != null }
-        .associate { Pair(it.first, OperatorInfo(it.second.priority, it.second.associativity)) }
+    fun getOperatorsInfos(): Map<String, OperatorInfo> {
+
+        return operations.entries
+            .map {
+                Pair(
+                    it.key,
+                    it.value.declaringClass.getAnnotation(OperationInfo::class.java)
+                )
+            }
+            .filter { it.second != null }
+            .associate { Pair(it.first, OperatorInfo(it.second.priority, it.second.associativity)) } + operations.entries.filter { Operation.AbstractFunction::class.java.isAssignableFrom(it.value.declaringClass) &&
+                !it.value.declaringClass.isAnnotationPresent(OperationInfo::class.java) }.associate { Pair(it.key, OperatorInfo(Priority.FUNCTION, Associativity.LEFT)) }
+
+    }
     fun getFunctionNames(): Collection<String> =
         operations.entries.filter { Operation.AbstractFunction::class.java.isAssignableFrom(it.value.declaringClass)}
             .map { it.key }
