@@ -4,5 +4,6 @@ enum class Priority {
     SUMMA_DIFFERENCE,
     DIVISION_MULTIPLICATION,
     POWER,
-    FUNCTION;
+    FUNCTION,
+    UNARY_MINUS
 }
