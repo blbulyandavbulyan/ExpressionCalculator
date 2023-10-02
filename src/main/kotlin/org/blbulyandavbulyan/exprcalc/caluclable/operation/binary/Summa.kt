@@ -1,9 +1,11 @@
 package org.blbulyandavbulyan.exprcalc.caluclable.operation.binary
 
-import org.blbulyandavbulyan.exprcalc.annotations.Operator
+import org.blbulyandavbulyan.exprcalc.annotations.Associativity
+import org.blbulyandavbulyan.exprcalc.annotations.Name
+import org.blbulyandavbulyan.exprcalc.annotations.OperatorInfo
 import org.blbulyandavbulyan.exprcalc.caluclable.Calculable
-
-@Operator(name = "+", Operator.Associativity.LEFT, 1)
-class Summa(a: Calculable, b: Calculable): BinaryOperation(a, b) {
+@Name("+")
+@OperatorInfo(Associativity.LEFT, 1)
+class Summa(a: Calculable, b: Calculable): BinaryOperator(a, b) {
     override fun calc(): Double = a.calc() + b.calc()
 }
