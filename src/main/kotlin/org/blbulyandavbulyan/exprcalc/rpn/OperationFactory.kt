@@ -48,7 +48,4 @@ class OperationFactory {
             Pair(it.key, operatorInfo)
         }
     }
-    fun getFunctionNames(): Collection<String> =
-        operations.entries.filter { Operation.AbstractFunction::class.java.isAssignableFrom(it.value.declaringClass)}
-            .map { it.key }
 }
