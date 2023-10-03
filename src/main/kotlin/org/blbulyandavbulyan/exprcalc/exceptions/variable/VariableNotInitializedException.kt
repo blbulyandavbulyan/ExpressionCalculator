@@ -1,4 +1,4 @@
-package org.blbulyandavbulyan.exprcalc.exceptions
+package org.blbulyandavbulyan.exprcalc.exceptions.variable
 
 import java.lang.RuntimeException
 
