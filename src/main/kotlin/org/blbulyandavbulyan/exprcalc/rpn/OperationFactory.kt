@@ -37,18 +37,16 @@ class OperationFactory {
     }
     operator fun contains(operatorName: String): Boolean = operatorName in operations
     fun getOperatorsInfos(): Map<String, OperatorInfo> {
-
-        return operations.entries
-            .map {
-                Pair(
-                    it.key,
-                    it.value.declaringClass.getAnnotation(OperationInfo::class.java)
-                )
-            }
-            .filter { it.second != null }
-            .associate { Pair(it.first, OperatorInfo(it.second.priority, it.second.associativity)) } + operations.entries.filter { Operation.AbstractFunction::class.java.isAssignableFrom(it.value.declaringClass) &&
-                !it.value.declaringClass.isAnnotationPresent(OperationInfo::class.java) }.associate { Pair(it.key, OperatorInfo(Priority.FUNCTION, Associativity.LEFT)) }
-
+        return operations.entries.associate {
+            val declaringClass = it.value.declaringClass
+            val operationInfo = declaringClass.getAnnotation(OperationInfo::class.java)
+            val operatorInfo: OperatorInfo = if (operationInfo != null) {
+                OperatorInfo(operationInfo.priority, operationInfo.associativity)
+            } else if (Operation.AbstractFunction::class.java.isAssignableFrom(declaringClass)) {
+                OperatorInfo(Priority.FUNCTION, Associativity.LEFT)
+            } else throw RuntimeException();
+            Pair(it.key, operatorInfo)
+        }
     }
     fun getFunctionNames(): Collection<String> =
         operations.entries.filter { Operation.AbstractFunction::class.java.isAssignableFrom(it.value.declaringClass)}
