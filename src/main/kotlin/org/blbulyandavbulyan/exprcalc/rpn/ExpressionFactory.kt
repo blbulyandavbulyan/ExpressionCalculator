@@ -6,7 +6,7 @@ import org.blbulyandavbulyan.exprcalc.caluclable.value.Variable
 import java.util.*
 
 class ExpressionFactory(private val operationFactory: OperationFactory) {
-    private val rpnConverter: RPNConverter = RPNConverter(operationFactory.getOperatorsInfos(), operationFactory.getFunctionNames())
+    private val rpnConverter: RPNConverter = RPNConverter(operationFactory.getOperatorsInfos())
     /**
      * Метод парсит выражение записанное в инфиксной форме
      * @param expr выражение, записанное в инфиксной форме

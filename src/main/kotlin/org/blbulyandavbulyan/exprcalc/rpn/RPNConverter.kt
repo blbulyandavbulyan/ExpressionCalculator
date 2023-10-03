@@ -5,11 +5,11 @@ import java.util.*
 import java.util.regex.MatchResult
 import java.util.regex.Pattern
 
-class RPNConverter(private val operatorInfos: Map<String, OperatorInfo>, private val functionsNames: Collection<String>) {
+class RPNConverter(private val operatorInfos: Map<String, OperatorInfo>) {
     private var splitToOperatorPattern: Pattern
     private var unaryMinusPattern: Pattern
     init {
-        val names = operatorInfos.keys + functionsNames
+        val names = operatorInfos.keys
         splitToOperatorPattern = Pattern.compile("(\\(|\\)|,|${names.joinToString("|") { Regex.escape(it) }})")
         unaryMinusPattern = Pattern.compile("(^|,|\\(|${names.filter {it != "#"}.joinToString ("|"){ Regex.escape(it) }})(-)")
     }
@@ -47,8 +47,6 @@ class RPNConverter(private val operatorInfos: Map<String, OperatorInfo>, private
                         result.push(operatorStack.pop())
                     }
                 }
-                else if (token in functionsNames)
-                    operatorStack.push(token)
                 else {
                     var toResult: Any = token
                     try {
