@@ -36,13 +36,11 @@ class RPNConverter(private val operatorInfos: Map<String, OperatorInfo>, private
                     operatorStack.push(token)
                 } else if (token == ")") {
                     //если встретилась закрывающая скобка, опустошаем стек
-                    if (!operatorStack.isEmpty()) {
-                        while (!operatorStack.isEmpty() && operatorStack.peek() != "(")
-                            result.push(operatorStack.pop()) //вытаскиваем все операторы из операторного стека и запихиваем в результат
-                        if (!operatorStack.isEmpty() && operatorStack.peek() == "(")
-                            operatorStack.pop() //убираем открывающую скобку из стэка
-                        else throw RuntimeException() //пропущена открывающая скобка
-                    } else throw RuntimeException() //пропущена открывающая скобка
+                    while (!operatorStack.isEmpty() && operatorStack.peek() != "(")
+                        result.push(operatorStack.pop()) //вытаскиваем все операторы из операторного стека и запихиваем в результат
+                    if (!operatorStack.isEmpty() && operatorStack.peek() == "(")
+                        operatorStack.pop() //убираем открывающую скобку из стэка
+                    else throw RuntimeException() //пропущена открывающая скобка
                 }
                 else if(token == ","){
                     while (operatorStack.isNotEmpty() && operatorStack.peek() != "("){
@@ -61,7 +59,12 @@ class RPNConverter(private val operatorInfos: Map<String, OperatorInfo>, private
                 }
             }
         }
-        while (!operatorStack.isEmpty()) result.push(operatorStack.pop())
+        while (!operatorStack.isEmpty()) {
+            val operator = operatorStack.pop()
+            if(operator == "(")
+                throw RuntimeException()//пропущена закрывающая скобка в выражении
+            result.push(operator)
+        }
         return result.toTypedArray()
     }
 
