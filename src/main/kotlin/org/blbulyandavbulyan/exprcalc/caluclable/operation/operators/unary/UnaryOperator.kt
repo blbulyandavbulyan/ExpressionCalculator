@@ -1,4 +1,4 @@
-package org.blbulyandavbulyan.exprcalc.caluclable.operation.unary
+package org.blbulyandavbulyan.exprcalc.caluclable.operation.operators.unary
 
 import org.blbulyandavbulyan.exprcalc.caluclable.Calculable
 import org.blbulyandavbulyan.exprcalc.caluclable.operation.Operation
