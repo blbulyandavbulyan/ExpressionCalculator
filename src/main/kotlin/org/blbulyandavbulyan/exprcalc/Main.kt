@@ -1,11 +1,10 @@
 package org.blbulyandavbulyan.exprcalc
 
 import org.blbulyandavbulyan.exprcalc.exceptions.ExpressionCalculatorException
-import org.blbulyandavbulyan.exprcalc.rpn.ExpressionFactory
-import org.blbulyandavbulyan.exprcalc.rpn.OperationFactory
+import org.blbulyandavbulyan.exprcalc.rpn.ExpressionFactoryBuilder
 
 fun main() {
-    val expressionFactory = ExpressionFactory(OperationFactory())
+    val expressionFactory = ExpressionFactoryBuilder().withDefault().build()
     var command: String;
     while (true){
         print("Введите выражение: ")
