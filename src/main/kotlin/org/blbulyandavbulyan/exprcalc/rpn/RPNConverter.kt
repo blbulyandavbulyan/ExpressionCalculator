@@ -1,6 +1,8 @@
 package org.blbulyandavbulyan.exprcalc.rpn
 
 import org.blbulyandavbulyan.exprcalc.annotations.Priority
+import org.blbulyandavbulyan.exprcalc.exceptions.parsing.MissingClosingBracket
+import org.blbulyandavbulyan.exprcalc.exceptions.parsing.MissingOpeningBracket
 import java.util.*
 import java.util.regex.MatchResult
 import java.util.regex.Pattern
@@ -40,7 +42,7 @@ class RPNConverter(private val operatorInfos: Map<String, OperatorInfo>) {
                         result.push(operatorStack.pop()) //вытаскиваем все операторы из операторного стека и запихиваем в результат
                     if (!operatorStack.isEmpty() && operatorStack.peek() == "(")
                         operatorStack.pop() //убираем открывающую скобку из стэка
-                    else throw RuntimeException() //пропущена открывающая скобка
+                    else throw MissingOpeningBracket() //пропущена открывающая скобка
                 }
                 else if(token == ","){
                     while (operatorStack.isNotEmpty() && operatorStack.peek() != "("){
@@ -60,7 +62,7 @@ class RPNConverter(private val operatorInfos: Map<String, OperatorInfo>) {
         while (!operatorStack.isEmpty()) {
             val operator = operatorStack.pop()
             if(operator == "(")
-                throw RuntimeException()//пропущена закрывающая скобка в выражении
+                throw MissingClosingBracket()//пропущена закрывающая скобка в выражении
             result.push(operator)
         }
         return result.toTypedArray()
