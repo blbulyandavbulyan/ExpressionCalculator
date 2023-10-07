@@ -8,6 +8,7 @@ fun main() {
     val expressionFactory = ExpressionFactory(OperationFactory())
     var command: String;
     while (true){
+        print("Введите выражение: ")
         command = readln()
         if(command == "exit")break;
         try {
