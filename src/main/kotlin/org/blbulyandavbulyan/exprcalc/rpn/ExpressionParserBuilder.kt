@@ -12,8 +12,11 @@ import java.lang.reflect.Modifier
 class ExpressionParserBuilder {
     private val functionPackages: MutableSet<String> = mutableSetOf()
     private val operations: MutableMap<String, Constructor<out Operation>> = mutableMapOf()
-    private val defaultFunctionsPackage = "org.blbulyandavbulyan.exprcalc.caluclable.operation"
-
+    private val defaultFunctionsPackage = "org.blbulyandavbulyan.exprcalc.caluclable.operation.functions"
+    private val defaultOperatorsPackage = "org.blbulyandavbulyan.exprcalc.caluclable.operation.operators"
+    init {
+        addPackage(defaultOperatorsPackage)
+    }
     fun addPackage(packageName: String): ExpressionParserBuilder {
         if(packageName !in functionPackages) {
             functionPackages.add(packageName)
@@ -30,7 +33,7 @@ class ExpressionParserBuilder {
         else throw IllegalStateException("Package $packageName is already added!")
     }
 
-    fun withDefault(): ExpressionParserBuilder{
+    fun withDefaultFunctions(): ExpressionParserBuilder{
         if(defaultFunctionsPackage !in functionPackages) {
             return addPackage(defaultFunctionsPackage)
         }

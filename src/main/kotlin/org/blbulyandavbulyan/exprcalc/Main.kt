@@ -4,7 +4,7 @@ import org.blbulyandavbulyan.exprcalc.exceptions.ExpressionCalculatorException
 import org.blbulyandavbulyan.exprcalc.rpn.ExpressionParserBuilder
 
 fun main() {
-    val expressionFactory = ExpressionParserBuilder().withDefault().build()
+    val expressionFactory = ExpressionParserBuilder().withDefaultFunctions().build()
     var command: String;
     while (true){
         print("Введите выражение: ")
