@@ -5,7 +5,7 @@ import org.blbulyandavbulyan.exprcalc.caluclable.value.Variable
 import org.blbulyandavbulyan.exprcalc.exceptions.variable.UndefinedVariableException
 import org.blbulyandavbulyan.exprcalc.exceptions.variable.VariableNotInitializedException
 
-class Expression(private val calculable: Calculable, private val variables: Map<String, List<Variable>>) : Calculable {
+class Expression(private val calculable: Calculable, private val variables: Map<String, List<Variable>>, val variableNames: Set<String> = variables.keys) : Calculable {
     operator fun set(variableName: String, value: Double) =
         (variables[variableName] ?: throw UndefinedVariableException(variableName)).forEach { it.v = value }
 

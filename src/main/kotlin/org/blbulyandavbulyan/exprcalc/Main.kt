@@ -6,12 +6,18 @@ import org.blbulyandavbulyan.exprcalc.rpn.ExpressionFactory
 
 fun main() {
     val expressionFactory = ExpressionFactory(OperationFactory())
-    fun evaluate(expr: String): Double{
-        return expressionFactory.parseExpression(expr).calc()
-    }
     var command: String = readln()
     while (command != "exit"){
-        println(evaluate(command))
+        val expression = expressionFactory.parseExpression(command);
+        val variableNames = expression.variableNames
+        if(variableNames.isNotEmpty()){
+            //здесь должен быть цикл запроса значений переменных
+            for (variableName in variableNames) {
+                print("Введите значение переменной $variableName: ")
+                expression[variableName] = readln().toDouble()
+            }
+        }
+        println(expression.calc())
         command = readln()
     }
 }
