@@ -9,12 +9,12 @@ import org.reflections.Reflections
 import java.lang.reflect.Constructor
 import java.lang.reflect.Modifier
 
-class ExpressionFactoryBuilder {
+class ExpressionParserBuilder {
     private val functionPackages: MutableSet<String> = mutableSetOf()
     private val operations: MutableMap<String, Constructor<out Operation>> = mutableMapOf()
     private val defaultFunctionsPackage = "org.blbulyandavbulyan.exprcalc.caluclable.operation"
 
-    fun addPackage(packageName: String): ExpressionFactoryBuilder {
+    fun addPackage(packageName: String): ExpressionParserBuilder {
         if(packageName !in functionPackages) {
             functionPackages.add(packageName)
             getAllOperationSubClasses(packageName)
@@ -30,15 +30,15 @@ class ExpressionFactoryBuilder {
         else throw IllegalStateException("Package $packageName is already added!")
     }
 
-    fun withDefault(): ExpressionFactoryBuilder{
+    fun withDefault(): ExpressionParserBuilder{
         if(defaultFunctionsPackage !in functionPackages) {
             return addPackage(defaultFunctionsPackage)
         }
         else throw IllegalStateException("Default functions already added!")
     }
 
-    fun build(): ExpressionFactory{
-        return ExpressionFactory(OperationFactory(operations), RPNConverter(getOperatorsInfos()))
+    fun build(): ExpressionParser{
+        return ExpressionParser(OperationFactory(operations), RPNConverter(getOperatorsInfos()))
     }
     private fun getOperatorsInfos(): Map<String, OperatorInfo> {
         return operations.entries.associate {
