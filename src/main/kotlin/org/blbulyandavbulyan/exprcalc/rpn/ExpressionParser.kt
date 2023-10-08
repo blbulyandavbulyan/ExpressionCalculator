@@ -35,4 +35,5 @@ class ExpressionParser(private val operationFactory: OperationFactory, private v
         }
         return Expression(deque.pop(), variables)
     }
+    operator fun invoke(expr: String) = parseExpression(expr)
 }

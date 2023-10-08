@@ -11,7 +11,7 @@ fun main() {
         command = readln()
         if(command == "exit")break;
         try {
-            val expression = expressionParser.parseExpression(command);
+            val expression = expressionParser(command);
             val variableNames = expression.variableNames
             if(variableNames.isNotEmpty()){
                 //здесь должен быть цикл запроса значений переменных
