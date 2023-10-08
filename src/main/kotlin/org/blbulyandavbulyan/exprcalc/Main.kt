@@ -4,14 +4,14 @@ import org.blbulyandavbulyan.exprcalc.exceptions.ExpressionCalculatorException
 import org.blbulyandavbulyan.exprcalc.rpn.ExpressionParserBuilder
 
 fun main() {
-    val expressionFactory = ExpressionParserBuilder().withDefaultFunctions().build()
+    val expressionParser = ExpressionParserBuilder().withDefaultFunctions().build()
     var command: String;
     while (true){
         print("Введите выражение: ")
         command = readln()
         if(command == "exit")break;
         try {
-            val expression = expressionFactory.parseExpression(command);
+            val expression = expressionParser.parseExpression(command);
             val variableNames = expression.variableNames
             if(variableNames.isNotEmpty()){
                 //здесь должен быть цикл запроса значений переменных
