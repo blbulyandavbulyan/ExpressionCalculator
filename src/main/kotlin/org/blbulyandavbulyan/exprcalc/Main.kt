@@ -16,7 +16,7 @@ fun main() {
             if(variableNames.isNotEmpty()){
                 //здесь должен быть цикл запроса значений переменных
                 for (variableName in variableNames) {
-                    print("Введите значение переменной $variableName: ")
+                    print("$variableName = ")
                     expression[variableName] = readln().toDouble()
                 }
             }
